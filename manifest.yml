@@ -1,0 +1,68 @@
+repository:
+  name: ynov-b3-formaflow-security-lab
+  version: 0.1.0
+  status: specification
+  academic_year: 2026-2027
+  module: Securite applicative et RGPD
+  duration_hours: 14
+  ffp_hours: 7
+  tdp_hours: 7
+
+reference:
+  source_repository: ynov-b3-formaflow-distributed
+  source_tag: reference-final
+  local_path: inputs/backend-reference
+  mode: copied_snapshot
+
+runtime:
+  language: TypeScript
+  framework: NestJS
+  persistence: PostgreSQL
+  broker: RabbitMQ
+  local_orchestration: Docker Compose
+  api_contract: OpenAPI
+  test_frameworks:
+    - Jest
+    - Supertest
+  authentication_primary: JWT Bearer
+  csrf_profile: isolated_cookie_profile
+  password_storage: bcrypt
+  encryption_at_rest_demo: AES-GCM
+  transport_security: local TLS reverse proxy
+  optional_tool: OWASP ZAP
+  external_services_required: false
+  data_policy: synthetic_only
+
+commands:
+  - setup
+  - start-vulnerable
+  - start-remediated
+  - stop
+  - reset-data
+  - smoke
+  - test
+  - security-tests
+  - tls
+  - quality
+
+tags:
+  formative:
+    - course-start-vulnerable
+    - checkpoint-recognition
+    - checkpoint-remediated
+    - checkpoint-privacy
+  canonical:
+    - reference-final
+
+assessment:
+  assessed: false
+  graded_artifacts: 0
+  individual_qcm:
+    duration_minutes: 30
+    graded: false
+    purpose: formative_validation
+
+handoff:
+  target_repository: ynov-b3-atlaslegacy
+  local_path: handoff/audit-method-reference
+  relationship: method_only_no_code_dependency
