@@ -147,6 +147,6 @@ Seules les instances locales FormaFlow SecureLab et les parcours explicitement a
 
 Les preuves restent minimales, réversibles et expurgées. Les données, identités, clés, tokens et certificats sont fictifs.
 
-## État de cette V1
+## État de la version 0.1.0
 
 Cette version fixe le contrat du laboratoire. Restent à produire : profils vulnérable/corrigé, scénarios, fixtures, certificats, tests, collections, scripts de reset, checkpoints réels, gabarits RGPD, kit QCM privé, référence finale et paquet méthodologique d'audit.
