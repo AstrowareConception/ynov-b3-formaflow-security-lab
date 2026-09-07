@@ -30,6 +30,8 @@
     "test:postgres": "node scripts/integration-tests.mjs postgres",
     "test:rabbitmq": "node scripts/integration-tests.mjs rabbitmq",
     "test:e2e": "node scripts/integration-tests.mjs e2e",
+    "test:privacy": "jest --runInBand tests/privacy && node scripts/validate-privacy.mjs",
+    "test:privacy:e2e": "node scripts/privacy-e2e.mjs",
     "contracts": "node scripts/validate-contracts.mjs",
     "diagrams": "node scripts/validate-diagrams.mjs",
     "tls": "node scripts/tls.mjs",

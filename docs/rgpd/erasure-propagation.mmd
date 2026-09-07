@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant U as Sujet synthétique
+  participant A as API Gateway
+  participant D as PostgreSQL
+  participant Q as RabbitMQ
+  participant E as Enrollment
+  U->>A: DELETE /api/account avec Bearer
+  A->>D: marque deleted_at et révoque session
+  A->>Q: account.deletion.requested.v1 {userId}
+  Q->>E: message minimal
+  E->>D: transaction inscription/notification/consentement
+  E-->>Q: ack après commit
+  Note over D: commandes conservées selon durée simulée

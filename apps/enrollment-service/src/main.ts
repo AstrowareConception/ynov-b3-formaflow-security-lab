@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Controller, Get, Module } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import amqp from 'amqplib';
-import { Pool } from 'pg';
+import { Pool, type PoolClient } from 'pg';
 
 async function connectRabbit(url: string) {
   let lastError: unknown;
@@ -32,12 +32,21 @@ async function bootstrap() {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL, statement_timeout: 2_000 });
   await channel.consume(queue.queue, async (message) => {
     if (!message) return;
+    let client: PoolClient | undefined;
     try {
       const event = JSON.parse(message.content.toString()) as { data: { userId: string } };
-      await pool.query("UPDATE enrollments SET status='erasure-requested' WHERE user_id=$1", [event.data.userId]);
+      client = await pool.connect();
+      await client.query('BEGIN');
+      await client.query("UPDATE enrollments SET status='erasure-requested' WHERE user_id=$1", [event.data.userId]);
+      await client.query('DELETE FROM notifications WHERE user_id=$1', [event.data.userId]);
+      await client.query('UPDATE consents SET withdrawn_at=COALESCE(withdrawn_at,now()) WHERE user_id=$1', [event.data.userId]);
+      await client.query('COMMIT');
       channel.ack(message);
     } catch {
+      await client?.query('ROLLBACK').catch(() => undefined);
       channel.nack(message, false, false);
+    } finally {
+      client?.release();
     }
   });
   await app.listen(Number(process.env.PORT ?? 3001), '0.0.0.0');

@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import {
-  Body, Controller, Delete, ForbiddenException, Get, Headers, HttpCode,
+  BadRequestException, Body, Controller, Delete, ForbiddenException, Get, Headers, HttpCode,
   NotFoundException, Param, Post, Query, Req, Res, UnauthorizedException,
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
@@ -14,6 +14,8 @@ import { currentProfile, vulnerableWarning } from './profile';
 
 type LoginBody = { email?: string; password?: string };
 type BioBody = { bio?: string };
+type RectificationBody = { displayName?: string; bio?: string };
+type NewsletterBody = { granted?: boolean; policyVersion?: string };
 const web = (name: string) => readFileSync(join(process.cwd(), 'apps/web-client', name), 'utf8');
 
 @Controller()
@@ -80,6 +82,37 @@ export class AppController {
     const bio = (body.bio ?? '').slice(0, 500);
     const result = await this.database.query('UPDATE users SET bio=$1 WHERE id=$2 RETURNING id,bio', [bio, actor.sub]);
     return result.rows[0];
+  }
+
+  @Post('/api/profile/rectification')
+  async rectify(@Req() request: Request, @Body() body: RectificationBody) {
+    const actor = await this.principal(request);
+    const displayName = (body.displayName ?? '').trim().slice(0, 80);
+    const bio = (body.bio ?? '').trim().slice(0, 500);
+    if (!displayName) throw new BadRequestException('Nom d’affichage synthétique requis');
+    const result = await this.database.query(
+      'UPDATE users SET display_name=$1,bio=$2 WHERE id=$3 AND deleted_at IS NULL RETURNING id,display_name,bio',
+      [displayName, bio, actor.sub],
+    );
+    return result.rows[0];
+  }
+
+  @Post('/api/preferences/newsletter')
+  async newsletter(@Req() request: Request, @Body() body: NewsletterBody) {
+    const actor = await this.principal(request);
+    if (typeof body.granted !== 'boolean' || body.policyVersion !== 'privacy-notice-2026-09') {
+      throw new BadRequestException('Préférence booléenne et version de notice attendues');
+    }
+    await this.database.query('UPDATE users SET newsletter=$1 WHERE id=$2 AND deleted_at IS NULL', [body.granted, actor.sub]);
+    await this.database.query(
+      'UPDATE consents SET withdrawn_at=COALESCE(withdrawn_at,now()) WHERE user_id=$1 AND purpose=$2 AND withdrawn_at IS NULL',
+      [actor.sub, 'optional-newsletter'],
+    );
+    await this.database.query(
+      'INSERT INTO consents(id,user_id,purpose,policy_version,granted_at,withdrawn_at) VALUES($1,$2,$3,$4,$5,$6)',
+      [randomUUID(), actor.sub, 'optional-newsletter', body.policyVersion, body.granted ? new Date() : null, body.granted ? null : new Date()],
+    );
+    return { purpose: 'optional-newsletter', granted: body.granted, policyVersion: body.policyVersion };
   }
 
   @Get('/api/orders/:id')

@@ -1,37 +1,46 @@
-# Transfert vers le projet CDAN
+# Transfert CDAN - Sécurité applicative et RGPD
 
-> Activité individuelle, formative et non notée. Adapter l'analyse à son projet et à son véritable périmètre autorisé.
+> Kit : 1.0.0
+> Identifiant : `TRF-SECURITY-RGPD-01`
+> Module : `security-rgpd`
+> Projet : `ynov-b3-formaflow-security-lab`
+> Statut : `verified` - mise à jour : 2026-09-07
 
-## Contexte et surface
+## Contexte
 
-- composant et actifs :
-- entrées contrôlées et frontières de confiance :
-- identités, rôles et données personnelles :
+Le laboratoire local compare des profils explicitement faibles et corrigés avec des identités `example.test`. Le socle et les fixtures sont fournis ; la production attendue distingue analyse collective et contribution personnelle.
 
-## Constat prouvé
+## Problème ou hypothèse
 
-- observation et hypothèse :
-- preuve minimale expurgée :
-- cause racine :
-- impacts technique, métier et RGPD :
+Une correction de contrôle d’accès suffit-elle si les DTO, événements, journaux et copies distribuées continuent d’exposer trop de données ?
 
-## Remédiation
+## Décision ou conclusion
 
-- correction proposée :
-- test positif :
-- test négatif/non-régression :
-- risque résiduel :
+La remédiation associe autorisation serveur, minimisation contractuelle, redaction et propagation d’effacement. Les commandes soumises à conservation simulée sont limitées plutôt que supprimées sans discernement.
 
-## Données et conformité
+## Contribution personnelle
 
-- finalité et base légale :
-- minimisation et durée :
-- droit ou parcours concerné :
-- extrait de registre ou cartographie :
+L’étudiant documente sa reproduction bornée, son analyse causale, le test ajouté et ses limites. La cartographie de référence et les fixtures sont des éléments fournis ; toute production de groupe est marquée `collective`.
 
-## Décision et suite
+## Outils et assistants
 
-- priorité et justification :
-- limite de l'analyse :
-- élément transférable depuis SecureLab :
-- prochaine action :
+Node, Jest, Docker Compose et Mermaid sont utilisés localement. Le contributeur vérifie les commandes, expurge les jetons et ne conserve que le résultat minimal.
+
+## Preuves sélectionnées
+
+| ID | Type et emplacement | Affirmation | Vérification/résultat | Provenance/confidentialité |
+|---|---|---|---|---|
+| `EVID-SECURITY-RGPD-EXPORT-01` | test, `tests/privacy/privacy-by-design.spec.ts` | l’export ne contient que les données du sujet et aucun secret | `npm run test:privacy` ; assertion réussie | provided / public |
+| `EVID-SECURITY-RGPD-FLOW-01` | diagramme, `docs/rgpd/erasure-propagation.mmd` | la demande minimale atteint le consommateur avant ack | `npm run diagrams` ; SVG frais | collective / public |
+
+## Limites
+
+Le test n’établit ni conformité juridique générale, ni purge réelle d’une sauvegarde, ni résilience multi-région. RabbitMQ et PostgreSQL restent locaux.
+
+## Transfert vers le projet CDAN
+
+Relier chaque constat à sa donnée, sa finalité, son propriétaire, sa durée, son test et son risque résiduel, sans exporter de donnée brute.
+
+## Action suivante
+
+Dans un projet autorisé, vérifier les bases légales et durées avec le responsable compétent puis automatiser la purge et le retest.

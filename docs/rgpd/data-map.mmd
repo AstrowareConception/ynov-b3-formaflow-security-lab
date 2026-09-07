@@ -1,0 +1,9 @@
+flowchart LR
+  U[Personne synthétique] -->|compte, profil, préférence| API[API Gateway]
+  API -->|DTO minimal| DB[(PostgreSQL local)]
+  API -->|UUID uniquement| MQ[[RabbitMQ local]]
+  MQ --> ENR[Enrollment Service]
+  ENR -->|statut inscription| DB
+  API -->|export propre| U
+  API -->|journal expurgé| LOG[(Audit logs)]
+  DB -. sauvegarde décrite 30 j .-> BAK[(Volume local chiffré hypothétique)]

@@ -1,5 +1,13 @@
-# Productions RGPD
+# RGPD et Privacy by Design
 
-Ce dossier contiendra `data-map.*`, `register.md` et `privacy-backlog.md`.
+Ce dossier décrit exclusivement des personnes et données synthétiques du laboratoire local. La cartographie relie chaque donnée à sa finalité, sa base légale, son propriétaire et sa durée. Le registre décrit les traitements ; les exigences et tests rendent la minimisation, les droits et l’effacement distribué vérifiables.
 
-La cartographie suit les données dans services, bases, messages, logs, exports et sauvegardes. Le registre relie finalité, acteurs, base légale, catégories, destinataires, durée, mesures et droits. Le backlog formule cinq exigences techniques et au moins deux tests automatisables.
+- `data-map.md` et `data-map.mmd` : inventaire et flux.
+- `register.md` : registre des traitements simulés.
+- `retention-matrix.md` : durées et déclencheurs de purge.
+- `minimization-matrix.md` : champs autorisés par DTO et événement.
+- `rights-procedures.md` : accès, export, rectification, opposition, retrait et effacement.
+- `privacy-backlog.md` et `requirements.md` : décisions techniques et critères d’acceptation.
+- `erasure-propagation.mmd` : propagation locale par RabbitMQ.
+
+Le consentement n’est utilisé que pour la newsletter facultative. Contrat, obligation légale simulée et intérêt légitime borné couvrent les autres finalités selon le registre.

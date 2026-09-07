@@ -1,0 +1,50 @@
+{
+  "recordId": "TRF-SECURITY-RGPD-01",
+  "kitVersion": "1.0.0",
+  "module": "security-rgpd",
+  "project": "ynov-b3-formaflow-security-lab",
+  "context": "Laboratoire défensif local utilisant uniquement des identités et données synthétiques.",
+  "problemOrHypothesis": "Une correction isolée reste insuffisante si les flux distribués exposent des données inutiles.",
+  "decisionOrConclusion": "Associer autorisation, minimisation, redaction et propagation contrôlée de l’effacement.",
+  "personalContribution": "Le contributeur documente sa reproduction bornée, son correctif, son test et ses limites ; le socle fourni reste identifié.",
+  "toolsOrAssistants": [{
+    "name": "Jest et Docker Compose",
+    "use": "Exécuter les contrôles locaux bornés et reproductibles.",
+    "verification": "Relire les assertions, réinitialiser les fixtures et expurger les résultats."
+  }],
+  "evidence": [
+    {
+      "evidenceId": "EVID-SECURITY-RGPD-EXPORT-01",
+      "name": "Minimisation de l’export",
+      "type": "test",
+      "claim": "L’export est limité au sujet authentifié et exclut les secrets techniques.",
+      "location": "tests/privacy/privacy-by-design.spec.ts",
+      "verification": "Exécuter npm run test:privacy depuis le dépôt local.",
+      "result": "Test réussi avec fixtures example.test.",
+      "contributor": "équipe pédagogique",
+      "provenance": "provided",
+      "limitations": "Ne couvre pas un stockage d’export externe.",
+      "confidentiality": "public",
+      "toolsUsed": ["Jest"]
+    },
+    {
+      "evidenceId": "EVID-SECURITY-RGPD-FLOW-01",
+      "name": "Propagation de l’effacement",
+      "type": "diagram",
+      "claim": "L’événement minimal est consommé et acquitté après la transaction locale.",
+      "location": "docs/rgpd/erasure-propagation.mmd",
+      "verification": "Exécuter npm run diagrams et relire le flux d’acquittement.",
+      "result": "Source Mermaid valide et SVG frais.",
+      "contributor": "groupe atelier",
+      "provenance": "collective",
+      "limitations": "Ne simule ni panne réseau longue ni sauvegarde réelle.",
+      "confidentiality": "public",
+      "toolsUsed": ["Mermaid"]
+    }
+  ],
+  "limitations": "Le laboratoire local ne démontre ni conformité juridique générale ni exploitation en production.",
+  "transferToProject": "Réutiliser la méthode en validant finalités, durées, propriétaires, contrats et tests dans le contexte autorisé.",
+  "nextAction": "Faire valider les bases légales puis automatiser purge et restauration avant toute exploitation réelle.",
+  "updatedAt": "2026-09-07",
+  "status": "verified"
+}
