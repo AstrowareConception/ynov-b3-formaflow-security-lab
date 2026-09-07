@@ -1,5 +1,9 @@
 # Modèle de menace
 
-`attack-surface.md` décrira actifs, acteurs, routes, paramètres, cookies, tokens, identifiants, événements, données personnelles, journaux, frontières de confiance et actions sensibles.
+Le modèle utilise STRIDE comme aide de questionnement, sans transformer une catégorie en constat. Le périmètre est la boucle locale, les conteneurs du projet et les identités synthétiques. Les documents associés séparent faits observables, hypothèses, actifs, frontières et preuves.
 
-Chaque hypothèse relie une entrée contrôlée, un composant, une faiblesse possible, un impact, une preuve minimale et une limite. Une hypothèse non confirmée reste explicitement une hypothèse.
+- `assets.md` : actifs et priorités ;
+- `attack-surface.md` : routes, ports, entrées et hypothèses ;
+- `trust-boundaries.md` : décisions attendues à chaque frontière ;
+- `personal-data.md` : données synthétiques représentatives ;
+- sources Mermaid et SVG : contexte, composants, frontières et surface.

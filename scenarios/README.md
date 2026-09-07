@@ -1,5 +1,13 @@
-# Scénarios autorisés
+# Scénarios bornés
 
-Chaque scénario précise : objectif pédagogique, profil requis, URL locale, comptes/fixtures, préconditions, actions maximales, preuve attendue, interdictions, correction, tests et reset.
+Les cinq dossiers décrivent des preuves minimales exclusivement dirigées vers `http://127.0.0.1:3000`. Le garde-fou `scripts/target-guard.mjs` refuse toute cible extérieure. Aucun scan, brute force, payload destructif ou donnée réelle n’est autorisé.
 
-Le catalogue couvrira SQLi, XSS, CSRF, IDOR et authentification défaillante, puis une variante de mini-audit. Les payloads restent inoffensifs et bornés. Aucun scénario n'autorise le ciblage d'une URL ou d'une identité non fournie.
+Après chaque scénario : arrêter l’outil actif, conserver uniquement la preuve minimale expurgée, exécuter `npm run reset-data`, redémarrer explicitement le profil indiqué si nécessaire, puis `npm run smoke`.
+
+| Dossier | Profil | Requêtes maximales |
+|---|---|---:|
+| `sql-injection/` | `vulnerable` | 3 |
+| `xss/` | `vulnerable` | 4 |
+| `csrf/` | `cookie` | 3 |
+| `idor/` | `vulnerable` | 3 |
+| `broken-auth/` | `vulnerable` | 6 |

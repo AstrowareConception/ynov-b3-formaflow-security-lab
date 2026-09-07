@@ -7,9 +7,9 @@ Les manipulations actives sont limitées :
 - aux conteneurs locaux du repository ;
 - aux comptes et fixtures fournis ;
 - aux scénarios précisément décrits dans `scenarios/` ;
-- aux parcours explicitement prévus sur Hack-Me.fr par le formateur.
+- aux URL de boucle locale et aux noms internes Docker énumérés par le projet.
 
-Tout autre système, domaine, adresse IP, compte ou donnée est hors périmètre.
+Tout autre système, domaine, adresse IP, compte ou donnée est hors périmètre. Aucun service tiers, site d’exercice public, AstroWare Conception ou accès Internet n’est une cible autorisée.
 
 ## Confinement
 

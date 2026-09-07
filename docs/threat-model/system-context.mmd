@@ -1,0 +1,7 @@
+flowchart LR
+  learner[Apprenant local\nidentité synthétique] -->|HTTP boucle locale| lab[FormaFlow Security Lab]
+  trainer[Formateur local] -->|observation et reset| lab
+  lab -->|réponse et preuve minimale| learner
+  lab -. aucune requête .-> forbidden[Internet / tiers\nhors périmètre]
+  classDef forbidden fill:#f5d6d3,stroke:#9d211b,stroke-dasharray:5 5
+  class forbidden forbidden

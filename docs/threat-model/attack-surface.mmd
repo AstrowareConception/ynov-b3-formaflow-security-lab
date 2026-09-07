@@ -1,0 +1,12 @@
+flowchart LR
+  input[Entrées non fiables] --> auth[Login]
+  input --> search[Recherche]
+  input --> bio[Bio]
+  input --> order[Identifiant commande]
+  input --> cookie[Action cookie]
+  auth --> a1[Enumération / session]
+  search --> a2[SQLi]
+  bio --> a3[XSS]
+  order --> a4[IDOR]
+  cookie --> a5[CSRF]
+  a1 & a2 & a3 & a4 & a5 --> proof[Preuve locale minimale]

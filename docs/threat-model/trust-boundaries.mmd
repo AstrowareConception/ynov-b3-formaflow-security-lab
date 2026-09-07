@@ -1,0 +1,17 @@
+flowchart TB
+  subgraph host[Hôte local]
+    browser[Navigateur]
+    subgraph docker[Réseau Docker formaflow-security-lab]
+      proxy[Terminaison TLS]
+      api[Gateway]
+      enroll[Enrollment]
+      db[(PostgreSQL)]
+      broker[(RabbitMQ)]
+    end
+  end
+  browser -->|frontière HTTP/cookie/Bearer| proxy
+  proxy -->|frontière TLS terminée| api
+  api -->|frontière SQL| db
+  api -->|frontière événement| broker
+  broker -->|message validé| enroll
+  enroll --> db

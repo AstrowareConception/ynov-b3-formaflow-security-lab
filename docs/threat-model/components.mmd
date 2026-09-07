@@ -1,0 +1,7 @@
+flowchart LR
+  browser[Web client local] --> gateway[API Gateway NestJS]
+  gateway --> pg[(PostgreSQL 16)]
+  gateway --> mq[(RabbitMQ 4.1)]
+  mq --> enrollment[Enrollment Service]
+  enrollment --> pg
+  gateway --> export[Export / effacement]
