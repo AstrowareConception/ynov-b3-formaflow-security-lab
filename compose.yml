@@ -105,6 +105,20 @@ services:
       LAB_PROFILE: cookie
       PORT: "3001"
 
+  tls-proxy:
+    image: nginx:1.27.5-alpine
+    profiles: [tls]
+    depends_on:
+      api-remediated:
+        condition: service_started
+    ports:
+      - "127.0.0.1:3080:80"
+      - "127.0.0.1:3443:443"
+    volumes:
+      - ./infra/tls/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./infra/tls/generated:/etc/nginx/tls:ro
+    networks: [lab]
+
 volumes:
   pgdata:
 

@@ -1,0 +1,9 @@
+flowchart LR
+  scope[Cadrer profil et cible] --> reproduce[Reproduire minimalement]
+  reproduce --> cause[Isoler la cause]
+  cause --> fix[Corriger au bon niveau]
+  fix --> positive[Test autorisé]
+  positive --> negative[Test interdit]
+  negative --> variant[Variante de non-régression]
+  variant --> residual[Documenter limite et risque résiduel]
+  residual --> reset[Reset puis smoke]

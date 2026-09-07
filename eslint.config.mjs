@@ -6,6 +6,7 @@ export default tseslint.config(
   { ignores: ['dist/**', 'coverage/**', 'artifacts/**', 'inputs/**'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
+  { files: ['apps/web-client/*.js'], languageOptions: { globals: globals.browser } },
   {
     files: ['**/*.ts'],
     languageOptions: { globals: globals.node },

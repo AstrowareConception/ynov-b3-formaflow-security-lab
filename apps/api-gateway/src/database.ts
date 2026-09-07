@@ -21,6 +21,13 @@ export class Database implements OnModuleDestroy {
     return this.pool.query(sql);
   }
 
+  remediatedCatalogSearch(term: string) {
+    return this.pool.query(
+      "SELECT id, title, description FROM catalog WHERE title ILIKE '%' || $1 || '%' ORDER BY title LIMIT 20",
+      [term],
+    );
+  }
+
   async onModuleDestroy() {
     await this.pool.end();
   }

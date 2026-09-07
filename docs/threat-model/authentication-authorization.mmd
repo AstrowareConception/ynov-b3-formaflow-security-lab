@@ -1,0 +1,14 @@
+sequenceDiagram
+  participant C as Client local
+  participant G as Gateway
+  participant S as Session store
+  participant D as Donnée commande
+  C->>G: Login synthétique
+  G->>G: bcrypt + limite uniforme
+  G->>S: Révoquer ancienne session, créer 15 min
+  G-->>C: Bearer signé expurgé des preuves
+  C->>G: GET commande + Bearer
+  G->>S: expiration et révocation
+  G->>D: charger par identifiant
+  G->>G: owner == sub OU role == support
+  G-->>C: 200 propriétaire/rôle ou 403 stable

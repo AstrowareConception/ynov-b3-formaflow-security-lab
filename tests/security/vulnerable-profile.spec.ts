@@ -34,7 +34,7 @@ describeVulnerable('preuves contrôlées du profil vulnérable', () => {
     await fetch(`${base}/api/profile/bio`, { method: 'POST', headers: { authorization: `Bearer ${body.accessToken}`, 'content-type': 'application/json' }, body: JSON.stringify({ bio: marker }), signal: signal() });
     const profile = await fetch(`${base}/api/profile`, { headers: { authorization: `Bearer ${body.accessToken}` }, signal: signal() }).then((r) => r.json()) as { bio: string };
     expect(profile.bio).toBe(marker);
-    expect(readFileSync('apps/web-client/index.html', 'utf8')).toContain("innerHTML=data.bio");
+    expect(readFileSync('apps/web-client/app.vulnerable.js', 'utf8')).toContain("innerHTML=data.bio");
   });
 });
 import { readFileSync } from 'node:fs';

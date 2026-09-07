@@ -1,5 +1,12 @@
-# Décisions cryptographiques
+# Cryptographie et transport
 
-`decisions.md` distinguera besoin, propriété recherchée, mécanisme, paramètres, gestion de clé, rotation, migration, limites et test pour bcrypt, AES-GCM et TLS.
+Les mécanismes répondent à des propriétés différentes :
 
-Les valeurs de démonstration ne sont pas des recommandations de production. Aucun secret réel n'est stocké dans Git ou dans les preuves.
+| Mécanisme | Propriété | Usage du laboratoire | Ne corrige pas |
+|---|---|---|---|
+| Hachage bcrypt | vérification non réversible d’un secret | mot de passe synthétique | autorisation, injection |
+| AES-256-GCM | confidentialité réversible + intégrité | champ personnel synthétique | anonymisation, finalité |
+| Signature/MAC | authenticité et intégrité d’un message | signature JWT / tag GCM selon le protocole | confidentialité seule |
+| TLS | confidentialité et intégrité en transit | navigateur vers proxy local | données au repos, contrôle métier |
+
+Voir `decisions.md` et `tls.md`. Les tests déterministes injectent leur clé en mémoire ; aucune clé réelle ou réutilisable n’est suivie.

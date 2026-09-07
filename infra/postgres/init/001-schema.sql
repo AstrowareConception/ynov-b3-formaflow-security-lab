@@ -59,9 +59,9 @@ CREATE TABLE audit_logs (
 );
 
 INSERT INTO users VALUES
-('10000000-0000-4000-8000-000000000001','alice.learner@example.test','Alice Synthétique','Profil local Alice','learner','Synthetic-Alice-2026!',NULL,true,NULL),
-('10000000-0000-4000-8000-000000000002','bob.learner@example.test','Bob Synthétique','Profil local Bob','learner','Synthetic-Bob-2026!',NULL,false,NULL),
-('10000000-0000-4000-8000-000000000003','sacha.support@example.test','Sacha Support','Support synthétique','support','Synthetic-Support-2026!',NULL,false,NULL);
+('10000000-0000-4000-8000-000000000001','alice.learner@example.test','Alice Synthétique','Profil local Alice','learner','Synthetic-Alice-2026!','$2b$12$7EFDH4JFZgMYh04aDyaz7uqjre0joVBgtaSRXjjG7pdp//BomGdMO',true,NULL),
+('10000000-0000-4000-8000-000000000002','bob.learner@example.test','Bob Synthétique','Profil local Bob','learner','Synthetic-Bob-2026!','$2b$12$HiZNPx667UOczSqzDcoFXu0qnR4sNLBHdlzfS8qwDVhzi4hEhRCAC',false,NULL),
+('10000000-0000-4000-8000-000000000003','sacha.support@example.test','Sacha Support','Support synthétique','support','Synthetic-Support-2026!','$2b$12$OIfDPbehiaNoutIVcHnv3uPpRXPwsbc/k1Wro1Inuu06UFMKh.DEO',false,NULL);
 INSERT INTO catalog VALUES
 ('20000000-0000-4000-8000-000000000001','Sécurité applicative','Atelier local contrôlé'),
 ('20000000-0000-4000-8000-000000000002','L''architecture sûre','Valeur légitime avec apostrophe');
