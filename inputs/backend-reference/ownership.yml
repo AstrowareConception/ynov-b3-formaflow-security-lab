@@ -1,0 +1,20 @@
+services:
+  catalog-service:
+    database: catalog_db
+    owns: [trainings, training_sessions, availability_projection]
+  order-service:
+    database: order_db
+    owns: [orders, order_lines, idempotency_keys, outbox_events]
+  enrollment-contract-simulator:
+    database: none
+    owns: [synthetic_reference_result]
+  notification-service:
+    database: notification_db
+    owns: [notification_attempts, inbox_events]
+  api-gateway:
+    database: none
+    owns: []
+rules:
+  cross_database_reads: forbidden
+  cross_service_foreign_keys: forbidden
+  shared_business_models: forbidden

@@ -1,0 +1,10 @@
+sequenceDiagram
+  participant O as Order service
+  participant R as RabbitMQ
+  participant N as Notification service
+  O->>R: publish OrderConfirmed.v1
+  R-->>O: message accepte
+  R->>N: livraison
+  N->>N: tentative synthetique
+  N-->>R: ack
+

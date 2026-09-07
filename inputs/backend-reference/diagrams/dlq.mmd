@@ -1,0 +1,6 @@
+flowchart LR
+  main[(Main queue)] --> consumer[Consumer]
+  consumer -->|transient failure attempt below 3| retry[(Retry queue TTL 500 ms)]
+  retry --> main
+  consumer -->|invalid or exhausted| dlq[(Dead letter queue)]
+  dlq -->|manual inspection only| operator[Local operator]

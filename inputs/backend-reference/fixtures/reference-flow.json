@@ -1,0 +1,7 @@
+{
+  "synthetic": true,
+  "implementation": "contract-simulator-only",
+  "order": {"orderId": "ORD-2027-000001", "status": "CONFIRMED", "correlationId": "security-reference-corr-0001"},
+  "enrollmentResult": {"enrollmentId": "ENR-2027-000001", "orderId": "ORD-2027-000001", "state": "ENROLLED", "correlationId": "security-reference-corr-0001"},
+  "notification": {"notificationId": "SYN-NOT-0001", "status": "SENT", "correlationId": "security-reference-corr-0001"}
+}

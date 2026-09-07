@@ -1,0 +1,6 @@
+sequenceDiagram
+  participant O as Order service
+  participant C as Catalog gRPC
+  O->>C: GetAvailability(sessionId, correlationId)
+  C-->>O: seats, price snapshot, currency
+

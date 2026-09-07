@@ -1,0 +1,11 @@
+{
+  "name": "ynov-b3-formaflow-distributed-security-reference",
+  "version": "1.0.0",
+  "sourceTag": "reference-final",
+  "consumerRepository": "ynov-b3-formaflow-security-lab",
+  "consumerPath": "inputs/backend-reference",
+  "selfContained": true,
+  "studentCodeIncluded": false,
+  "dataPolicy": "synthetic-only",
+  "externalServiceRequired": false
+}

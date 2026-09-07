@@ -1,0 +1,10 @@
+{
+  "synthetic": true,
+  "accounts": [
+    {"accountId": "ACC-0001", "displayName": "SYN Learner One", "email": "learner.0001@example.test", "roles": ["customer"]},
+    {"accountId": "ACC-9001", "displayName": "SYN Support One", "email": "support.9001@example.test", "roles": ["support"]}
+  ],
+  "learners": [
+    {"learnerId": "LRN-0001", "givenName": "SYN-Ada", "familyName": "Example", "postalCode": "75000", "country": "FR"}
+  ]
+}

@@ -1,0 +1,7 @@
+flowchart LR
+  command[Create order] --> tx[(order_db transaction)]
+  tx --> order[(orders)]
+  tx --> outbox[(outbox_events)]
+  outbox --> relay[Outbox relay]
+  relay -->|publisher confirm| rabbit[(RabbitMQ)]
+  rabbit --> inbox[(notification inbox)]

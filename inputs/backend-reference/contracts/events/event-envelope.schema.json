@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://formaflow.example.test/events/event-envelope.schema.json",
+  "type": "object",
+  "required": ["eventId", "eventType", "version", "occurredAt", "correlationId", "causationId", "producer", "payload"],
+  "properties": {
+    "eventId": {"type": "string", "minLength": 1},
+    "eventType": {"type": "string", "minLength": 1},
+    "version": {"type": "integer", "minimum": 1},
+    "occurredAt": {"type": "string", "format": "date-time"},
+    "correlationId": {"type": "string", "minLength": 1},
+    "causationId": {"type": ["string", "null"]},
+    "producer": {"type": "string", "minLength": 1},
+    "payload": {"type": "object"}
+  }
+}
+

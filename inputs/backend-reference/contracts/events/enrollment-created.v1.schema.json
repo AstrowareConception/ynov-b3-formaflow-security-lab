@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://formaflow.example.test/events/enrollment-created.v1.schema.json",
+  "title": "EnrollmentCreated.v1",
+  "allOf": [
+    {"$ref": "event-envelope.schema.json"},
+    {
+      "type": "object",
+      "properties": {
+        "eventType": {"const": "EnrollmentCreated.v1"},
+        "version": {"const": 1},
+        "producer": {"const": "enrollment-service"},
+        "payload": {
+          "type": "object",
+          "required": ["enrollmentId", "orderId", "learnerId", "trainingSessionId", "enrolledAt"],
+          "properties": {
+            "enrollmentId": {"type": "string", "pattern": "^ENR-[0-9]{4}-[0-9]{6}$"},
+            "orderId": {"type": "string", "pattern": "^ORD-[0-9]{4}-[0-9]{6}$"},
+            "learnerId": {"type": "string", "pattern": "^LRN-[0-9]{4}$"},
+            "trainingSessionId": {"type": "string", "pattern": "^SES-[0-9]{4}-[0-9]{4}$"},
+            "enrolledAt": {"type": "string", "format": "date-time"}
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

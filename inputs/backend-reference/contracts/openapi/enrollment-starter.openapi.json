@@ -1,0 +1,21 @@
+{
+  "openapi": "3.1.0",
+  "info": {"title": "FormaFlow Enrollment assessment contract", "version": "1.0.0"},
+  "paths": {
+    "/api/enrollments/{enrollmentId}": {
+      "get": {
+        "summary": "Consult an enrollment owned by the local identity",
+        "parameters": [
+          {"in": "path", "name": "enrollmentId", "required": true, "schema": {"type": "string", "pattern": "^ENR-[0-9]{4}-[0-9]{6}$"}},
+          {"in": "header", "name": "X-Correlation-Id", "required": false, "schema": {"type": "string", "maxLength": 128}}
+        ],
+        "responses": {
+          "200": {"description": "Enrollment state"},
+          "401": {"description": "Missing or invalid local JWT"},
+          "403": {"description": "Identity cannot read the enrollment"},
+          "404": {"description": "Unknown enrollment"}
+        }
+      }
+    }
+  }
+}

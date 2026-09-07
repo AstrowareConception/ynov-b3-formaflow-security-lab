@@ -1,0 +1,9 @@
+sequenceDiagram
+  participant C as Client
+  participant G as API Gateway
+  participant O as Order service
+  C->>G: POST /api/orders + Idempotency-Key
+  G->>O: REST + correlation
+  O-->>G: 201 Order
+  G-->>C: 201 + correlation
+

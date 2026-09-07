@@ -1,0 +1,7 @@
+flowchart LR
+  client[Client synthetique] --> formaflow[FormaFlow]
+  admin[Administration] --> formaflow
+  ops[Exploitation locale] --> formaflow
+  formaflow --> payment[Paiement simule]
+  formaflow --> notify[Notification synthetique]
+

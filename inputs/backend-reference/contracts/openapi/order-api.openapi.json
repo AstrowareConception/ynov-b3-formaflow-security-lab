@@ -1,0 +1,25 @@
+{
+  "openapi": "3.1.0",
+  "info": {"title": "FormaFlow Order API contract", "version": "1.0.0"},
+  "paths": {
+    "/api/orders": {
+      "post": {
+        "summary": "Create a synthetic enrollment order",
+        "parameters": [{"in": "header", "name": "Idempotency-Key", "required": true, "schema": {"type": "string", "minLength": 8}}],
+        "responses": {
+          "201": {"description": "Order created"},
+          "400": {"description": "Invalid command"},
+          "409": {"description": "Idempotency conflict"},
+          "503": {"description": "Local dependency unavailable"}
+        }
+      }
+    },
+    "/api/orders/{orderId}": {
+      "get": {
+        "parameters": [{"in": "path", "name": "orderId", "required": true, "schema": {"type": "string"}}],
+        "responses": {"200": {"description": "Order state"}, "404": {"description": "Unknown order"}}
+      }
+    }
+  }
+}
+

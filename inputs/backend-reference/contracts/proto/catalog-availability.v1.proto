@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package formaflow.catalog.v1;
+
+service CatalogAvailability {
+  rpc GetAvailability (AvailabilityRequest) returns (AvailabilityResponse);
+}
+
+message AvailabilityRequest {
+  string training_session_id = 1;
+  string correlation_id = 2;
+}
+
+message AvailabilityResponse {
+  string training_session_id = 1;
+  bool available = 2;
+  int32 available_seats = 3;
+  int64 unit_price_minor = 4;
+  string currency = 5;
+}
+

@@ -1,0 +1,10 @@
+sequenceDiagram
+  participant G as Gateway
+  participant O as Order
+  participant R as RabbitMQ
+  participant N as Notification
+  G->>O: REST correlationId
+  O->>R: OrderConfirmed.v1 correlationId eventId
+  R->>N: at-least-once delivery
+  N->>N: inbox(eventId)
+  Note over G,N: JSON logs and metrics joined by correlationId

@@ -1,0 +1,39 @@
+{
+  "info": {
+    "name": "FormaFlow Security backend reference",
+    "_postman_id": "44444444-4444-4444-8444-444444444444",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "gatewayUrl", "value": "http://localhost:8080"},
+    {"key": "demoToken", "value": "GENERATE_LOCALLY_DO_NOT_PERSIST"},
+    {"key": "correlationId", "value": "security-reference-corr-0001"}
+  ],
+  "item": [
+    {
+      "name": "Create confirmed synthetic order",
+      "request": {
+        "method": "POST",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{demoToken}}"},
+          {"key": "Content-Type", "value": "application/json"},
+          {"key": "Idempotency-Key", "value": "security-reference-idem-0001"},
+          {"key": "X-Correlation-Id", "value": "{{correlationId}}"}
+        ],
+        "body": {"mode": "raw", "raw": "{\n  \"customerAccountId\": \"ACC-0001\",\n  \"learnerId\": \"LRN-0001\",\n  \"trainingSessionId\": \"SES-2027-0001\",\n  \"paymentScenario\": \"accepted\"\n}"},
+        "url": "{{gatewayUrl}}/api/orders"
+      }
+    },
+    {
+      "name": "Consult synthetic order",
+      "request": {
+        "method": "GET",
+        "header": [
+          {"key": "Authorization", "value": "Bearer {{demoToken}}"},
+          {"key": "X-Correlation-Id", "value": "{{correlationId}}"}
+        ],
+        "url": "{{gatewayUrl}}/api/orders/ORD-2027-000001"
+      }
+    }
+  ]
+}

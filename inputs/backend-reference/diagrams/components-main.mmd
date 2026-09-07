@@ -1,0 +1,6 @@
+flowchart LR
+  http[REST Controllers] --> application[Use cases]
+  application --> contracts[Transport contracts]
+  application --> adapters[Local adapters]
+  adapters --> owneddb[(Owned database)]
+
