@@ -223,9 +223,10 @@ def validate(root: Path) -> Report:
             report.check(False, f"secret ou clé indexé: {name}")
         if path.is_file() and path.suffix.lower() in {".md", ".json", ".yml", ".yaml", ".ts", ".js", ".mjs", ".py", ".txt", ""} and name != "package-lock.json" and not name.startswith("inputs/backend-reference/"):
             content = path.read_text(encoding="utf-8", errors="replace")
-            report.check("-----BEGIN PRIVATE KEY-----" not in content, f"clé privée manifeste: {name}")
+            private_key_marker = "-----BEGIN PRIVATE " + "KEY-----"
+            report.check(private_key_marker not in content, f"clé privée manifeste: {name}")
             if not name.startswith(("evidence/templates/", "handoff/audit-method-reference/templates/")):
-                placeholder_terms = "TO" + "DO|FIX" + "ME|T" + "BD|à compléter|sera ajouté|restent à produire"
+                placeholder_terms = "TO" + "DO|FIX" + "ME|T" + "BD|à compl" + "éter|sera ajout" + "é|restent à pro" + "duire"
                 report.check(re.search(rf"(?i)\b(?:{placeholder_terms})\b", content) is None, f"placeholder non autorisé: {name}")
             for email in re.findall(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", content, re.IGNORECASE):
                 report.check(email.lower().endswith(("@example.test", "@example.com", "@example.org", ".invalid")), f"adresse non synthétique: {name}")

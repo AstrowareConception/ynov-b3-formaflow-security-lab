@@ -37,9 +37,10 @@
     "tls": "node scripts/tls.mjs",
     "validate": "python scripts/validate_repository.py",
     "test:negative": "python scripts/test_validator_negative.py",
+    "test:package": "python scripts/build_release.py --verify-only",
     "handoff": "python handoff/audit-method-reference/scripts/validate_handoff.py",
     "package": "python scripts/build_release.py",
-    "quality": "npm run validate && npm run test:negative && npm run contracts && npm run diagrams && npm run typecheck && npm run lint && npm test && npm run build && npm run package"
+    "quality": "npm run validate && npm run test:negative && npm run contracts && npm run diagrams && npm run typecheck && npm run lint && npm test && npm run build && npm run test:package"
   },
   "dependencies": {
     "@nestjs/common": "11.2.3",

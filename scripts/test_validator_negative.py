@@ -25,6 +25,16 @@ def replace(relative: str, old: str, new: str) -> Mutation:
     return mutate
 
 
+def replace_all(relative: str, old: str, new: str) -> Mutation:
+    def mutate(root: Path) -> None:
+        path = root / relative
+        content = path.read_text(encoding="utf-8")
+        if old not in content:
+            raise RuntimeError(f"précondition absente pour {relative}: {old}")
+        path.write_text(content.replace(old, new), encoding="utf-8", newline="\n")
+    return mutate
+
+
 def remove(relative: str) -> Mutation:
     return lambda root: (root / relative).unlink()
 
@@ -65,7 +75,7 @@ CASES: dict[str, Mutation] = {
     "placeholder": add("docs/unresolved.md", "TO" + "DO: contenu non livré\n"),
     "idea-indexed": add(".idea/workspace.xml", "<project/>\n"),
     "csrf": replace("apps/api-gateway/src/app.controller.ts", "x-csrf-token", "x-intent-removed"),
-    "bcrypt": replace("apps/api-gateway/src/auth.service.ts", "bcrypt.compare", "removedCompare"),
+    "bcrypt": replace_all("apps/api-gateway/src/auth.service.ts", "bcrypt.compare", "removedCompare"),
     "aes-key": add("infra/tls/generated-aes.key", "synthetic-but-forbidden-key-file\n"),
     "event-minimization": mutate_event,
     "privacy-test": remove("tests/privacy/privacy-by-design.spec.ts"),
@@ -83,6 +93,14 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="formaflow-validator-negative-") as temporary:
         baseline = Path(temporary) / "baseline"
         shutil.copytree(source, baseline, ignore=ignore)
+        baseline_result = subprocess.run(
+            [sys.executable, str(baseline / "scripts/validate_repository.py"), "--root", str(baseline)],
+            capture_output=True, text=True, timeout=60,
+        )
+        if baseline_result.returncode != 0:
+            print("ÉCHEC baseline du validateur négatif")
+            print(baseline_result.stdout + baseline_result.stderr)
+            return 1
         for name, mutation in sorted(CASES.items()):
             candidate = Path(temporary) / name
             shutil.copytree(baseline, candidate)
