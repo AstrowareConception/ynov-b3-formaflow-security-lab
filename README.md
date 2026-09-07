@@ -1,7 +1,7 @@
 # FormaFlow SecureLab — Sécurité applicative & RGPD
 
-> Version documentaire : 0.1.0  
-> Statut : spécification initiale, laboratoire non encore implémenté  
+> Version : 1.0.0
+> Statut : référence formateur exécutable et validée
 > Module : Sécurité applicative & RGPD — Bachelor 3 DEV  
 > Volume : 14 heures — 7 h FFP + 7 h TDP
 
@@ -68,9 +68,9 @@ Chaque scénario suit la chaîne :
 
 Le syllabus indique que le module est **non évalué**. L'unique dispositif individuel est un QCM formatif non noté de 30 minutes en séance 4. Les preuves, correctifs, tests, cartographies et rapports produits en binôme donnent lieu à du feedback, mais à aucune note.
 
-Le QCM, ses variantes et son corrigé restent dans un kit formateur privé.
+Le QCM couvre les cinq familles de vulnérabilités, les choix cryptographiques et TLS, les principes RGPD et la méthode d’audit. Aucun contenu d’épreuve n’est distribué dans ce repository.
 
-## Arborescence cible
+## Arborescence
 
 ```text
 ynov-b3-formaflow-security-lab/
@@ -108,7 +108,7 @@ ynov-b3-formaflow-security-lab/
 
 | Commande | Effet attendu |
 |---|---|
-| `make setup` | Vérifier versions, dépendances, Docker et configuration locale |
+| `make setup` | Vérifier les versions et installer les dépendances verrouillées |
 | `make start-vulnerable` | Lancer explicitement le profil vulnérable sur l'hôte local |
 | `make start-remediated` | Lancer le profil corrigé de référence |
 | `make stop` | Arrêter uniquement les ressources du laboratoire |
@@ -143,10 +143,10 @@ Le module Rétro-ingénierie & Audit de code repart ensuite d'AtlasLegacy au tag
 
 ## Limites impératives
 
-Seules les instances locales FormaFlow SecureLab et les parcours explicitement autorisés de Hack-Me.fr entrent dans le périmètre. Toute attaque, analyse active ou tentative d'accès visant un système réel, un service tiers ou le site d'AstroWare Conception est interdite.
+Seules les instances locales FormaFlow SecureLab sur boucle locale et les services internes de son projet Docker entrent dans le périmètre. Toute attaque, analyse active ou tentative d'accès visant un système réel ou un service tiers est interdite.
 
 Les preuves restent minimales, réversibles et expurgées. Les données, identités, clés, tokens et certificats sont fictifs.
 
-## État de la version 0.1.0
+## État de la version 1.0.0
 
-Cette version fixe le contrat du laboratoire. Restent à produire : profils vulnérable/corrigé, scénarios, fixtures, certificats, tests, collections, scripts de reset, checkpoints réels, gabarits RGPD, kit QCM privé, référence finale et paquet méthodologique d'audit.
+Cette référence livre les trois profils isolés, cinq scénarios bornés, remédiations causales, cryptographie, TLS local, cartographie RGPD, mini-audit, preuves CDAN, handoff méthodologique, validateur négatif et scripts de distribution. Les limites d’une PKI, d’un limiteur et de sauvegardes purement locaux restent explicitement documentées.

@@ -1,7 +1,7 @@
 repository:
   name: ynov-b3-formaflow-security-lab
-  version: 0.1.0
-  status: specification
+  version: 1.0.0
+  status: ready-for-release
   academic_year: 2026-2027
   module: Securite applicative et RGPD
   duration_hours: 14
@@ -53,6 +53,7 @@ tags:
     - checkpoint-privacy
   canonical:
     - reference-final
+    - security-lab-v1.0.0
 
 assessment:
   assessed: false

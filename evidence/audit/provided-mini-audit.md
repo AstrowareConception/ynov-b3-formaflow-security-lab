@@ -1,0 +1,21 @@
+# EVID-SEC-AUDIT-01 — mini-audit et retest consolidés
+
+- Identifiant stable : `EVID-SEC-AUDIT-01`.
+- Contexte : référence formateur locale, cinq familles et flux RGPD synthétiques.
+- Tag ou commit : `checkpoint-privacy` pour les données ; commit final pour le rapport.
+- Environnement : Node 24.13, npm 11, Docker Compose, PostgreSQL 16.10 et RabbitMQ 4.1.4.
+- État initial : fixtures recréées, aucun service tiers, smoke du profil explicite.
+- Commande ou requête minimale : `npm test`, `npm run test:privacy`, profils locaux et `python scripts/validate_repository.py`.
+- Résultat attendu : chaque constat relie preuve, cause, impacts, correction, retest, limite et risque résiduel.
+- Résultat observé : rapport structuré, preuves expurgées et contrôles locaux réussis dans l’environnement décrit.
+- Interprétation : le rapport est actionnable sans constituer une liste de contrôle universelle.
+- Cause ou hypothèse : causes confirmées uniquement pour les mécanismes du laboratoire ; faiblesses voisines non testées.
+- Provenance : `provided`.
+- Contributeur : `trainer-reference`.
+- Contribution personnelle : l’étudiant doit produire et défendre son propre constat ; la matrice de référence reste fournie.
+- Confidentialité : `public`, données réservées et résultats minimaux.
+- Vérification : relire `reports/remediation.md`, suivre les commandes puis vérifier les tags.
+- Résultat de vérification : `passed` lors de la consolidation locale ; toute autre plateforme doit rejouer les commandes.
+- Limites : absence de charge, PKI publique, KMS, navigateur tiers, sauvegarde réelle et validation juridique.
+- Risque résiduel : contrôles distribués et exploitation à durcir avant exposition.
+- Reset : `npm run reset-data`, `npm run smoke`, `npm run stop`.

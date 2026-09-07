@@ -1,5 +1,14 @@
-# Sortie — Méthode d'audit
+# Référence de méthode pour audit court
 
-Ce dossier sera publié par le formateur dans `reference-final`. Il contiendra méthode de cadrage, vocabulaire de qualification, gabarits de preuve et de constat, exemples neutralisés, priorisation, risque résiduel, retest et règles éthiques.
+Paquet autonome destiné à un futur laboratoire inconnu. Il transmet une méthode de cadrage, qualification, preuve, priorisation et retest ; il ne transmet ni code applicatif, ni chaîne de démonstration, ni scénario SecureLab, ni liste de faiblesses à découvrir, ni constat sur un système consommateur.
 
-Il ne contiendra ni le code de SecureLab, ni une liste de vulnérabilités à retrouver dans AtlasLegacy, ni une production étudiante brute. Le cours suivant repartira d'une codebase inconnue au tag `audit-start`.
+## Parcours
+
+1. Lire `PROVENANCE.md`, `VERSIONS.md` et `ETHICS.md`.
+2. Cadrer l’autorisation et les limites avec `method/scope.md`.
+3. Employer `method/vocabulary.md` puis `method/prioritization.md`.
+4. Produire une preuve et un constat depuis `templates/`.
+5. Retester avec `checklists/retest.md`.
+6. Exécuter `python scripts/validate_handoff.py`.
+
+Le manifeste utilise des chemins relatifs POSIX triés sur leur texte. Le validateur ne dépend que de la bibliothèque standard et ne contacte aucun réseau.
