@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>FormaFlow Security Lab</title>
+  <style>
+    :root{--ink:#17201b;--paper:#f4f0e5;--warn:#b3251e;--line:#1f6b4d;--soft:#dbe7dc}*{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 80% 15%,#f7dca8 0,transparent 28%),linear-gradient(135deg,var(--paper),#e6eee3);color:var(--ink);font-family:Georgia,'Times New Roman',serif;min-height:100vh}
+    header{padding:2.5rem max(5vw,1.2rem) 1.5rem;border-bottom:3px solid var(--ink)}h1{font-size:clamp(2.2rem,6vw,5rem);line-height:.9;margin:0;max-width:12ch;letter-spacing:-.05em}
+    #warning{display:none;background:var(--warn);color:white;padding:1rem max(5vw,1.2rem);font:700 .9rem ui-monospace,monospace;letter-spacing:.08em}
+    main{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;padding:2rem max(5vw,1.2rem)}section{background:#fff9;border:1px solid #17201b55;padding:1.3rem;box-shadow:6px 6px 0 var(--soft)}
+    label{display:block;margin:.7rem 0 .25rem;font-weight:700}input,textarea,button{width:100%;padding:.7rem;border:1px solid var(--ink);font:inherit}button{background:var(--line);color:#fff;font-weight:700;margin-top:.8rem;cursor:pointer}pre{white-space:pre-wrap;font:13px ui-monospace,monospace;background:#17201b;color:#f4f0e5;padding:1rem;min-height:6rem}.wide{grid-column:1/-1}.badge{font:700 .8rem ui-monospace,monospace;text-transform:uppercase}
+    @media(max-width:720px){main{grid-template-columns:1fr}.wide{grid-column:auto}}
+  </style>
+</head>
+<body>
+  <div id="warning">PROFIL VOLONTAIREMENT VULNÉRABLE — LABORATOIRE LOCAL UNIQUEMENT</div>
+  <header><span class="badge" id="profile">profil en cours...</span><h1>Comprendre avant de corriger.</h1></header>
+  <main>
+    <section><h2>Connexion synthétique</h2><label>Email</label><input id="email" value="alice.learner@example.test"><label>Mot de passe</label><input id="password" type="password" value="Synthetic-Alice-2026!"><button id="login">Obtenir le jeton local</button></section>
+    <section><h2>Catalogue PostgreSQL</h2><label>Recherche</label><input id="query" value="Sécurité"><button id="search">Rechercher</button><pre id="catalog"></pre></section>
+    <section class="wide"><h2>Bio contrôlée et rendu local</h2><textarea id="bio">Bio synthétique</textarea><button id="save">Enregistrer puis afficher</button><div id="bio-render"></div></section>
+    <section class="wide"><h2>Trace minimale</h2><pre id="output">Aucune requête.</pre></section>
+  </main>
+  <script>
+    let token=''; const output=document.querySelector('#output');
+    fetch('/health').then(r=>r.json()).then(h=>{document.querySelector('#profile').textContent=`profil ${h.profile}`;if(h.profile==='vulnerable')document.querySelector('#warning').style.display='block'});
+    document.querySelector('#login').onclick=async()=>{const r=await fetch('/api/auth/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email:email.value,password:password.value})});const data=await r.json();token=data.accessToken||'';output.textContent=JSON.stringify({...data,accessToken:token?'[EXPURGÉ]':undefined},null,2)};
+    document.querySelector('#search').onclick=async()=>{const r=await fetch(`/api/catalog?q=${encodeURIComponent(query.value)}`);const data=await r.json();catalog.textContent=JSON.stringify(data,null,2)};
+    document.querySelector('#save').onclick=async()=>{await fetch('/api/profile/bio',{method:'POST',headers:{authorization:`Bearer ${token}`,'content-type':'application/json'},body:JSON.stringify({bio:bio.value})});const data=await fetch('/api/profile',{headers:{authorization:`Bearer ${token}`}}).then(r=>r.json());document.querySelector('#bio-render').innerHTML=data.bio;output.textContent='Bio synthétique affichée dans le sink didactique.'};
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.git
+.idea
+_inputs
+node_modules
+dist
+coverage
+artifacts
+infra/tls/generated
+.env
+*.log

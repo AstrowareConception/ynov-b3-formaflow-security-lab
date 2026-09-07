@@ -1,0 +1,113 @@
+name: formaflow-security-lab
+
+x-api: &api
+  build: .
+  depends_on:
+    postgres:
+      condition: service_healthy
+    rabbitmq:
+      condition: service_healthy
+  environment: &runtime
+    DATABASE_URL: postgresql://formaflow_runtime:synthetic-runtime-password@postgres:5432/formaflow
+    RABBITMQ_URL: amqp://formaflow:synthetic-rabbit-password@rabbitmq:5672
+    JWT_SECRET: synthetic-compose-jwt-secret-local-only
+    AES_GCM_KEY_BASE64: ${AES_GCM_KEY_BASE64:-}
+    ALLOWED_ORIGIN: http://127.0.0.1:3000
+  networks: [lab]
+
+services:
+  postgres:
+    image: postgres:16.10-alpine3.22
+    profiles: [vulnerable, remediated, cookie]
+    environment:
+      POSTGRES_USER: formaflow_admin
+      POSTGRES_PASSWORD: synthetic-admin-password
+      POSTGRES_DB: formaflow
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U formaflow_admin -d formaflow"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    networks: [lab]
+
+  rabbitmq:
+    image: rabbitmq:4.1.4-management-alpine
+    profiles: [vulnerable, remediated, cookie]
+    environment:
+      RABBITMQ_DEFAULT_USER: formaflow
+      RABBITMQ_DEFAULT_PASS: synthetic-rabbit-password
+    ports:
+      - "127.0.0.1:15672:15672"
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, ping]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+    networks: [lab]
+
+  api-vulnerable:
+    <<: *api
+    profiles: [vulnerable]
+    environment:
+      <<: *runtime
+      LAB_PROFILE: vulnerable
+      PORT: "3000"
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  api-remediated:
+    <<: *api
+    profiles: [remediated]
+    environment:
+      <<: *runtime
+      LAB_PROFILE: remediated
+      PORT: "3000"
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  api-cookie:
+    <<: *api
+    profiles: [cookie]
+    environment:
+      <<: *runtime
+      LAB_PROFILE: cookie
+      PORT: "3000"
+    ports:
+      - "127.0.0.1:3000:3000"
+
+  enrollment-vulnerable:
+    <<: *api
+    profiles: [vulnerable]
+    command: [node, dist/apps/enrollment-service/src/main.js]
+    environment:
+      <<: *runtime
+      LAB_PROFILE: vulnerable
+      PORT: "3001"
+
+  enrollment-remediated:
+    <<: *api
+    profiles: [remediated]
+    command: [node, dist/apps/enrollment-service/src/main.js]
+    environment:
+      <<: *runtime
+      LAB_PROFILE: remediated
+      PORT: "3001"
+
+  enrollment-cookie:
+    <<: *api
+    profiles: [cookie]
+    command: [node, dist/apps/enrollment-service/src/main.js]
+    environment:
+      <<: *runtime
+      LAB_PROFILE: cookie
+      PORT: "3001"
+
+volumes:
+  pgdata:
+
+networks:
+  lab:
+    driver: bridge
